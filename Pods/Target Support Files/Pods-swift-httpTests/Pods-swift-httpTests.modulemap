@@ -1,0 +1,6 @@
+framework module Pods_swift_httpTests {
+  umbrella header "Pods-swift-httpTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

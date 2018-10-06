@@ -9,36 +9,31 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    //let src = ["AAA", "BBB", "CCC"]
-    let jsonSrc = """
-    {"items": ["AAA", "BBB", "CCC", "DDD"]}
-    """
+     @IBOutlet weak var tableView: UITableView!
+    var jsonArray: [String] = []
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return jsonArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
-        
-        let json = try? JSONSerialization.jsonObject(with: jsonSrc.data(using: .utf8)!, options: [])
-        if let dictionary = json as? [String: Any] {
-            if let items = dictionary["items"] as? [String] {
-                cell.textLabel!.text = items[indexPath.row]
-            }
-        }
-        
+        cell.textLabel!.text = jsonArray[indexPath.row]
         return cell
     }
-    
-
-    @IBOutlet weak var tableView: UITableView!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let src = """
+        {"items": ["AAA", "BBB", "CCC", "DDD", "EEE"]}
+        """
+        let json = try? JSONSerialization.jsonObject(with: src.data(using: .utf8)!, options: [])
+        print(json!)
+        if let dictionary = json as? [String: Any] {
+            if let json = dictionary["items"] as? [String] {
+                jsonArray = json
+            }
+        }
     }
-
-
 }
 
